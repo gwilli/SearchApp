@@ -13,10 +13,10 @@ import androidx.room.Query;
 @Dao
 public interface ProductDao {
     @Insert
-    void insert(Product[] products);
+    void insert(Product... products);
 
     @Delete
-    void delete(Product[] products);
+    void delete(Product... products);
 
     @Query("delete from product")
     void deleteAll();

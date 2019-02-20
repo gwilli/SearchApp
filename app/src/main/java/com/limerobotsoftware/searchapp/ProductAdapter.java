@@ -1,6 +1,7 @@
 package com.limerobotsoftware.searchapp;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
@@ -46,7 +47,9 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.binding.productName.setText(name);
         holder.binding.productSize.setText(product.getSize());
         holder.binding.productUpc.setText(product.getUpc());
-        Picasso.with(context).load(product.getImageUrl()).placeholder(R.drawable.ic_no_photo).noFade().into(holder.binding.productImage);
+        if (!TextUtils.isEmpty(product.getImageUrl())) {
+            Picasso.with(context).load(product.getImageUrl()).placeholder(R.drawable.ic_no_photo).noFade().into(holder.binding.productImage);
+        }
     }
 
     @Override
