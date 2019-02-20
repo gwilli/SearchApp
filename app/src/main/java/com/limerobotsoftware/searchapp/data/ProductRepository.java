@@ -21,7 +21,8 @@ public class ProductRepository {
     }
 
     public void searchProducts(String searchString) {
-        products = productDao.searchProducts("%" + searchString + "%");
+        //products = productDao.searchProducts("%" + searchString + "%");
+        products = productDao.betterSearchProducts(searchString + "*");
     }
 
     public LiveData<List<Product>> getProducts() {

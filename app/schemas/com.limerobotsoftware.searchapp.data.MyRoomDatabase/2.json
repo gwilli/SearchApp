@@ -1,0 +1,117 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "65ab174efe4765f9bf1b8b499565e733",
+    "entities": [
+      {
+        "tableName": "product",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`upc` TEXT NOT NULL, `brand_name` TEXT, `name` TEXT, `size` TEXT, `ingredients` TEXT, `image_url` TEXT, PRIMARY KEY(`upc`))",
+        "fields": [
+          {
+            "fieldPath": "upc",
+            "columnName": "upc",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "brandName",
+            "columnName": "brand_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "size",
+            "columnName": "size",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ingredients",
+            "columnName": "ingredients",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "imageUrl",
+            "columnName": "image_url",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "upc"
+          ],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "ftsVersion": "FTS4",
+        "ftsOptions": {
+          "tokenizer": "simple",
+          "tokenizerArgs": [],
+          "contentTable": "product",
+          "languageIdColumnName": "",
+          "matchInfo": "FTS4",
+          "notIndexedColumns": [],
+          "prefixSizes": [],
+          "preferredOrder": "ASC"
+        },
+        "contentSyncTriggers": [
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_product_fts_BEFORE_UPDATE BEFORE UPDATE ON `product` BEGIN DELETE FROM `product_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_product_fts_BEFORE_DELETE BEFORE DELETE ON `product` BEGIN DELETE FROM `product_fts` WHERE `docid`=OLD.`rowid`; END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_product_fts_AFTER_UPDATE AFTER UPDATE ON `product` BEGIN INSERT INTO `product_fts`(`docid`, `upc`, `brand_name`, `name`, `ingredients`) VALUES (NEW.`rowid`, NEW.`upc`, NEW.`brand_name`, NEW.`name`, NEW.`ingredients`); END",
+          "CREATE TRIGGER IF NOT EXISTS room_fts_content_sync_product_fts_AFTER_INSERT AFTER INSERT ON `product` BEGIN INSERT INTO `product_fts`(`docid`, `upc`, `brand_name`, `name`, `ingredients`) VALUES (NEW.`rowid`, NEW.`upc`, NEW.`brand_name`, NEW.`name`, NEW.`ingredients`); END"
+        ],
+        "tableName": "product_fts",
+        "createSql": "CREATE VIRTUAL TABLE IF NOT EXISTS `${TABLE_NAME}` USING FTS4(`upc` TEXT, `brand_name` TEXT, `name` TEXT, `ingredients` TEXT, content=`product`)",
+        "fields": [
+          {
+            "fieldPath": "upc",
+            "columnName": "upc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "brandName",
+            "columnName": "brand_name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ingredients",
+            "columnName": "ingredients",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [],
+          "autoGenerate": false
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"65ab174efe4765f9bf1b8b499565e733\")"
+    ]
+  }
+}

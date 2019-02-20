@@ -23,4 +23,7 @@ public interface ProductDao {
 
     @Query("select * from product where name like :query or brand_name like :query or ingredients like :query or upc like :query")
     LiveData<List<Product>> searchProducts(String query);
+
+    @Query("select product.* from product join product_fts on product.'rowid' = product_fts.'rowid' where product_fts match :query")
+    LiveData<List<Product>> betterSearchProducts(String query);
 }
